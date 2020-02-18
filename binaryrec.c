@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<time.h>
 int bin(int a[],int start ,int end,int key )
 {
 int mid;
@@ -22,6 +23,7 @@ void main()
 {
 int a[100];
 int key,size,result;
+int startt,endt,tim;
 printf("Enter the size of array");
 scanf("%d",&size);
 printf("Enter the elements");
@@ -31,13 +33,18 @@ scanf("%d",&a[i]);
 }
 printf("KEY :");
 scanf("%d",&key);
+startt=clock();
 result=bin(a,0,size-1,key);
+endt=clock();
+tim=endt-startt;
+
 if (result==-1)
 {
-printf("Element not found");
+printf("Element not found\n");
 }
 else
 {
-printf("element found at %d",result);
+printf("element found at %d\n",result);
 }
+printf("the time required is %d",tim);
 }
