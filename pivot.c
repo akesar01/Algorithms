@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<conio.h>
-int beg,mid,end,key,p,a[10],n,result;3
-int pivot(beg,mid,end);
+int beg,mid,end,key,p,a[10],n,result;
+int pivot(int ,int,int);
 int bs(int key,int beg,int end,int a[]);
 void main()
 {
