@@ -1,10 +1,12 @@
 #include<stdio.h>
 int visited[100];
+int count=0;
 void dfs(int arr[20][20],int start,int size)
 {
 
     visited[start]= 1;
     printf("%d  ",start);
+    count++;
     for(int i=0;i<size;++i)
     {
         if(arr[start][i]== 1 && visited[i]== 0)
@@ -36,4 +38,10 @@ void main()
         }
     }
     dfs(a,start,size);
+    if(count==size)
+    {
+        printf("connected");
+    }
+    else
+        printf("Notconnected");
 }
