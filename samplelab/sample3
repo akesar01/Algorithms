@@ -1,0 +1,34 @@
+def connected(start,x,g,bol):
+    print("{} ".format(start),end=" ")
+    bol[start]=1
+
+    for k in range(x):
+        if(g[start][k]==1 and bol[k]==1):
+            print("Connected")
+            exit("EXITED")
+        if(g[start][k]==1  and bol[k]==0):
+            connected(k,x,g,bol)
+
+
+
+
+
+
+
+
+
+
+a= int(input("Enter the size of graph:\t"))
+boolean =[]
+for i in range(a):
+    boolean.append(0)
+print(boolean)
+
+g=[[0 for i in range(a)]for i in range(a)]
+for i in range(a):
+    for j in range(a):
+        g[i][j]=int(input("Enter the edge from {} to {}: ".format(i,j)))
+print(g)
+start=int(input("Enter the starting element"))
+
+connected(start,a,g,boolean)
