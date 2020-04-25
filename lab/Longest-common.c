@@ -8,6 +8,7 @@
 */
 
 void main(){
+    hhi
     char s1[]={'c','a','t','c','h','\0'};
     char s2[]={'c','a','r','c','h','\0'};
 
