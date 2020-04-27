@@ -1,73 +1,80 @@
 #include<stdio.h>
-#include<conio.h>
-int beg,mid,end,key,p,a[10],n,result;
-int pivot(int ,int,int);
-int bs(int key,int beg,int end,int a[]);
-void main()
-{
-    printf("enter the no. of elements");
-    scanf("%d",&n);
-    printf("enter the elements into the array");
-    for(int i=0;i<n;i++)
-        scanf("%d",&a[i]);
-    printf("enter the element to be searched");
+#include<stdlib.h>
+#include<time.h>
+
+int findpivot(int *arr,int start,int end){
+    if(start==end)
+    return start;
+    if (start>end)
+    return -1;
+int mid= start +(end-start)/2;
+
+ if (arr[mid]>arr[mid+1]){
+    return mid;
+ }
+ if (arr[mid]<arr[mid-1]){
+     return mid-1;
+ }
+ if(arr[start]>= arr[mid])
+ return findpivot(arr,start,mid-1);
+ return findpivot(arr,mid+1,end);
+
+}
+int bs(int *arr,int start,int end,int key){
+
+    int mid = start +(end-start)/2;
+
+    if(arr[mid]==key)
+    return mid;
+    else if(arr[mid]<key)
+    {
+        bs(arr,mid+1,end,key);
+    }
+    else{
+        bs(arr,start,mid-1,key);
+    }
+}
+
+
+int search(int *arr,int start,int end,int key){
+    int pivot =findpivot(arr,start,end);
+    if (pivot==-1){
+       return  bs(arr,start,end,key);
+    }
+    if(arr[pivot]==key){
+        return pivot;
+    }
+
+    if(arr[start]>=key){
+        return bs(arr,pivot+1,end,key);
+    }
+    return bs(arr,start,pivot-1,key);
+}
+
+
+
+
+void main(){
+    int count;
+    printf("Enter the size of array");
+    scanf("%d",&count);
+
+    int *arr =(int *)malloc(count * sizeof(int));
+    
+    printf("Enter the elements of array");
+   
+    for (int i = 0; i <count ; i++)
+    {
+        scanf("%d",&arr[i]);
+    }
+
+    printf("Enter the key");
+    int key;
     scanf("%d",&key);
-    beg=0;
-    end=n-1;
-    mid=(beg+end)/2;
-    p=pivot(beg,mid,end);
-    //now use binary search
-    printf("the pivot element is %d",a[p]);
-    beg=0;
-    end=n-1;
-    if((key>=a[beg])&&(key<=a[p-1]))
-    result=bs(key,beg,p-1,a);
-    else
-    result=bs(key,p,end,a);
+    int startt = clock();
 
-     if(result==-1)
-        printf("not found");
-    else
-        printf("element is found at position %d",result);
-
-
-
-
-
-
-}
-
-int pivot(int beg,int mid,int end)
-{
-    if(a[mid]>a[mid+1])
-    {
-        return mid+1;
-    }
-    else if(a[beg]>a[mid])
-    {
-        end=mid-1;
-        return pivot(beg,(beg+end)/2,end);
-    }
-    else
-    {   beg=mid+1;
-        return pivot(beg,(beg+end)/2,end);
-    }
-}
-
-int bs(int key,int beg,int end,int a[])
-{
-     mid=(beg+end)/2;
-    if(beg<end)
-    {
-    if(a[mid]==key)
-        return mid;
-    else if(a[mid]>key)
-        return bs(key,beg,mid-1,a);
-    else
-        return bs(key,mid+1,end,a);
-
-    }
-    else return -1;
-
-
+    int a= search(arr,0,count-1,key);
+    int endt =clock();
+    printf("Element id found at %d position\n",a+1);
+    printf("The Time taken To run this program is %d",(endt-startt)/2);
 }
