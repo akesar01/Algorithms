@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
+int flag = 1;
 void printArray(int * a,int n){
+    flag =0;
 
     for(int i =0;i<n;++i){
         printf("%d ",a[i]);
@@ -34,5 +36,7 @@ void findsubset(int* set,int size,int sum)
 int main(){
     int weights[] ={10,7,5,18,12,20,15};
     int size =7;
-    findsubset(weights,size,35);
+    findsubset(weights,size,2);
+    if(flag)
+    printf("The subset not found");
 }
