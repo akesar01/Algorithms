@@ -1,66 +1,60 @@
-#include<stdio.h> 
-#include<stdbool.h> 
-#define V 4 
-  
-void printSolution(int color[]); 
-bool isSafe (int v, bool graph[V][V], int color[], int c) 
-{ 
-    for (int i = 0; i < V; i++) 
-        if (graph[v][i] && c == color[i]) 
-            return false; 
-    return true; 
-} 
-bool graphColoringUtil(bool graph[V][V], int m, int color[], int v) 
-{ 
-    if (v == V) 
-        return true; 
-    for (int c = 1; c <= m; c++) 
-    { 
-        if (isSafe(v, graph, color, c)) 
-        { 
-           color[v] = c; 
-           if (graphColoringUtil (graph, m, color, v+1) == true) 
-            return true; 
-           color[v] = 0; 
-        } 
+#include<stdio.h>
+#include<stdlib.h>
+void printsol(int color[],int n){
+    for(int i=0;i<n;i++)
+    printf("%d ",color[i]);
+    printf("\n");
+
+}
+int issafe(int v,int arr[][4],int color[],int c)
+{
+    for(int i=0;i<4;i++){
+        if(arr[v][i] && color[i]==c)
+        {
+            return 0;
+        }
     }
-    return false; 
-} 
-bool graphColoring(bool graph[V][V], int m) 
-{ 
-    int color[V]; 
-    for (int i = 0; i < V; i++) 
-       color[i] = 0; 
-    if (graphColoringUtil(graph, m, color, 0) == false) 
-    { 
-      printf("Solution does not exist"); 
-      return false; 
-    } 
-    printSolution(color); 
-    return true; 
-} 
-  
-void printSolution(int color[]) 
-{ 
-    printf("Solution Exists:"
-            " Following are the assigned colors \n"); 
-    for (int i = 0; i < V; i++) 
-      printf(" %d ", color[i]); 
-    printf("\n"); 
-} 
-  
-int main() 
-{ 
-    int i,j,m;
-    bool graph[V][V];
-    printf("Enter adjacency matrix\n");
-    for(i=0;i<V;i++)
-    {
-        for(j=0;j<V;j++)
-        scanf("%d",&graph[i][j]);
+    return 1;
+
+}
+int coloruntil(int arr[][4],int m,int color[],int v)
+{
+    if(4==v)
+    return 1;
+    for(int i=1;i<=m; i++){
+
+    if(issafe(v,arr,color,i)){
+        color[v]=i;
+        if(coloruntil(arr,m,color,v+1)){
+
+            return 1;
+        }
+        color[v]=0;
+
+
+
     }
-    printf("Enter number of colors\n");
-    scanf("%d",&m);
-    graphColoring (graph, m); 
-    return 0; 
+    }
+return 0;
+    
+
 } 
+void graphcoloring(int arr[][4],int m,int size){
+    int * color =(int *)malloc(size * sizeof(int));
+    for (int i =0;i<size;++i)
+    color[i] =0;
+    if(coloruntil(arr,m,color,0)==0){
+    printf("Solution does not exist");
+    return ;
+    }
+    printsol(color,size);
+    return ;
+
+
+}
+void main(){
+    int arr[4][4]={{0,1,1,1},{1,0,1,0},{1,1,0,1},{1,0,1,0}};
+    int m=3;
+    graphcoloring(arr,m,4);
+
+ }
